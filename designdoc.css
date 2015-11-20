@@ -1,0 +1,109 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    padding: 20px;
+    background: #f7f7f7;
+}
+
+a {
+    text-decoration: none;
+    color: #69b0bf;
+    transition: all 0.4s ease;
+}
+
+a:hover {
+    color: #69b0bf;
+    transition: all 0.4s ease;
+}
+
+#container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100%;
+    overflow: auto;
+    background-color: #fff;
+}
+
+#top {
+    background-color: #000;
+    color: #fff;
+    text-align: right;
+    padding: 50px 30px 10px 30px;
+}
+
+#name {
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    line-height: 18px;
+}
+
+#short_info {
+    font-size: 0.4em;
+    text-transform: lowercase;
+}
+
+#middle {
+    background-color: #69b0bf;
+    color: #fff;
+    overflow: auto;
+}
+
+#img_me {
+    width: 20%;
+    float: left;
+}
+
+#text_me {
+    width: 79%;
+    float: right;
+}
+
+#bio {
+    text-align: justify;
+    font-size: 13px;
+    padding: 0 30px;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+#assignments {
+    padding: 20px 0;
+}
+
+#assignments img {
+    max-width: 600px;
+}
+
+.projects {
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 20px;
+}
+
+.project_list ul {
+    font-size: 14px;
+    padding: 0;
+}
+
+.project_list li {
+    list-style-position: inside;
+    margin: 0;
+    padding: 10px;
+    border-bottom: 1px solid;
+    cursor: default;
+}
+
+#gibson {
+    background-color: #000;
+    padding: 10px;
+}
+
+#gibson a {
+    color: #fff;
+}
+
+#gibson a:hover {
+    color: #69b0bf
+}
