@@ -4,10 +4,14 @@
 <head>
     <meta charset="utf-8" />
     <title>Groovy Movies</title>
-
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <!-- import jQuery -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-
+    <script src="../js/jquery.js"></script>
+    <script src="../js/video.js"></script>
     <script>
         "use strict";
         var THEMOVIEDB_URL = "https://api.themoviedb.org/3/search/movie?api_key="
@@ -115,15 +119,32 @@
 </head>
 
 <body>
-    <h1>Groovy Movies</h1>
+     <div class="homepage-hero-module">
+        <div class="video-container">
+            <div class="filter"></div>
+            <video autoplay loop class="fillWidth">
+                <source src="../media/blurry-night.mp4" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.
+                <source src="../media/blurry-night.mp4" type="video/webm" />Your browser does not support the video tag. I suggest you upgrade your browser.
+            </video>
+            <div class="poster hidden">
+                <img src="../media/blurry-night.jpg" alt="">
+            </div>
+        </div>
+     </div>  
 
-    <button type="button" id="search">Get Movies!</button>
-    <input id="searchterm" type="text" size="20" maxlength="20" />
-
-    <h2>Results</h2>
-    <div id="dynamicContent">
-        <p>No data yet!</p>
+    
+    <div class="container">
+        <img class = "logo" src="../media/logo.png" alt="">
+        <p>MOVIE STATISTICS AND INSIGHTS</p>
+        <div class="searchbar">
+            <input id="searchterm" type="text" size="20" maxlength="20">
+            <button type="button" id="search">go</button>
+        </div>
     </div>
+    <h2>Results</h2>
+        <div id="dynamicContent">
+            <p>No data yet!</p>
+        </div>
 
 
 
