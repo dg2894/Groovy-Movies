@@ -1,4 +1,6 @@
-
+.movie-container {
+    
+}
 .homepage-hero-module {
     border-right: none;
     border-left: none;
@@ -17,7 +19,7 @@
     position: relative;
     bottom: 0%;
     left: 0%;
-    height: 60%;
+    height: 100%;
     width: 100%;
     overflow: hidden;
     background: #000;
@@ -43,10 +45,10 @@
 }
 
 .container{
-   width: 650px;
- 
+  z-index: 999;
+  width: 650px;
   position: absolute;
-  top: 30%;
+  top: 50%;
   left: 50%;
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
@@ -74,10 +76,14 @@
     text-align: center;
 }
 .searchbar input, .searchbar button {
-    display: inline;
+    display: inline;  
+}
+.container .down{
+    display: block;
+    margin: auto;
+    margin-top: 90px;
     
 }
-
 button{
     -moz-box-shadow:inset 0px 1px 0px 0px #9acc85;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #9acc85;
@@ -94,4 +100,9 @@ button{
 	text-decoration:none;
     height: 38px;
     width: 42px;
+}
+.contain{
+    width: 1200px;
+    margin: auto;
+    
 }
