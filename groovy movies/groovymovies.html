@@ -8,9 +8,9 @@
     <link rel="stylesheet" type="text/css" href="../css/style.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <!-- import jQuery -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="../js/jquery.js"></script>
     <script src="../js/video.js"></script>
+
     <script>
         "use strict";
         var THEMOVIEDB_URL = "https://api.themoviedb.org/3/search/movie?api_key="
@@ -27,7 +27,6 @@
                     go();
                 }
             });
-            r
         };
 
         function go() {
@@ -114,11 +113,22 @@
                         var movieData = JSON.parse(this.responseText);
 
                         var div = document.createElement('div');
-                        div.id = movieData.original_title;
+                        div.className = "movieDiv";
                         bigString += "<h3>" + movieData.original_title + "</h3>";
                         bigString += "<p>" + movieData.overview + "</p>";
                         div.innerHTML = bigString;
-                        bigString = ""
+                        bigString = "";
+
+
+                        var button = document.createElement("button");
+                        button.innerHTML = "Read More"
+                        button.id = movieData.original_title;
+                        button.className = "movieButton";
+                        button.addEventListener('click', function () {
+                            readMore(movieData);
+                        });
+
+                        div.appendChild(button);
                         document.querySelector('#dynamicContent').appendChild(div);
                     }
                 };
@@ -128,6 +138,11 @@
             }
 
             $("#dynamicContent").fadeIn(500);
+        }
+
+        function readMore(obj) {
+            console.log("clicked");
+            console.log(obj.original_title);
         }
     </script>
     <style>
