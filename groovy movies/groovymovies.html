@@ -6,7 +6,6 @@
     <title>Groovy Movies</title>
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <!-- import jQuery -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -21,17 +20,24 @@
         window.onload = init;
 
         function init() {
-            document.querySelector("#search").onclick = getData;
-          
-            $(document).keypress(function(e) {
-            if(e.which == 13) {
-            getData();
+            document.querySelector("#search").onclick = go;
+
+            $(document).keypress(function (e) {
+                if (e.which == 13) {
+                    go();
                 }
             });
-            
-            
+            r
         };
-        
+
+        function go() {
+            getData();
+            $("html, body").animate({
+                scrollTop: (($(window).height()) + 10) + 'px'
+            }, 600);
+            return false;
+        }
+
 
         // MY FUNCTIONS
         function getData() {
@@ -107,10 +113,13 @@
                     if (this.readyState === 4) {
                         var movieData = JSON.parse(this.responseText);
 
-                        console.log(movieData.overview);
+                        var div = document.createElement('div');
+                        div.id = movieData.original_title;
                         bigString += "<h3>" + movieData.original_title + "</h3>";
                         bigString += "<p>" + movieData.overview + "</p>";
-                        document.querySelector("#dynamicContent").innerHTML = bigString;
+                        div.innerHTML = bigString;
+                        bigString = ""
+                        document.querySelector('#dynamicContent').appendChild(div);
                     }
                 };
 
@@ -129,37 +138,37 @@
 
 <body>
     <div class="movie-container">
-     <div class="homepage-hero-module">
-        <div class="video-container">
-            <div class="filter"></div>
-            <video autoplay loop class="fillWidth">
-                <source src="../media/blurry-night.mp4" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.
-                <source src="../media/blurry-night.mp4" type="video/webm" />Your browser does not support the video tag. I suggest you upgrade your browser.
-            </video>
-            <div class="poster hidden">
-                <img src="../media/blurry-night.jpg" alt="">
+        <div class="homepage-hero-module">
+            <div class="video-container">
+                <div class="filter"></div>
+                <video autoplay loop class="fillWidth">
+                    <source src="../media/blurry-night.mp4" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.
+                    <source src="../media/blurry-night.mp4" type="video/webm" />Your browser does not support the video tag. I suggest you upgrade your browser.
+                </video>
+                <div class="poster hidden">
+                    <img src="../media/blurry-night.jpg" alt="">
+                </div>
             </div>
         </div>
-      </div>  
     </div>
 
-    
+
     <div class="container">
-        <img class = "logo" src="../media/logo.png" alt="">
+        <img class="logo" src="../media/logo.png" alt="">
         <p>MOVIE STATISTICS AND INSIGHTS</p>
         <div class="searchbar">
             <input id="searchterm" type="text" size="20" maxlength="20">
-            <button type="button" id="search" href="#results">go</button>  
+            <button type="button" id="search" href="#results">go</button>
         </div>
-        
-        <a href="#results" title="photography"><img class ="down" src="../media/button.png" alt="" width="50" height="50"></a>
+
+        <!--        <a href="#results" title="photography"><img class="down" src="../media/button.png" alt="" width="50" height="50"></a>-->
     </div>
     <div class="contain">
         <section id="results">
-        <h2>Results</h2>
+            <h2>Results</h2>
             <div id="dynamicContent">
                 <p>No data yet!</p>
-           </div>
+            </div>
         </section>
     </div>
 
