@@ -111,7 +111,6 @@
                         button.className = "read-more-button";
                         div.appendChild(button);
 
-
                         var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
                         svg.setAttribute('id', "rating-" + movieData.id);
                         svg.setAttribute('width', '100px');
@@ -120,7 +119,13 @@
                         svg.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
                         div.appendChild(svg);
 
+                        var outOf = document.createElement("p");
+                        outOf.innerHTML = "out of: " + movieData.vote_count + " total votes";
+                        outOf.style.visibility = "none";
+                        div.appendChild(outOf);
+
                         button.addEventListener('click', function () {
+                            outOf.style.visibility = "visible";
                             readMore(movieData, svg);
                         });
 
