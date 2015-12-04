@@ -108,18 +108,23 @@
                         var button = document.createElement("button");
                         button.innerHTML = "Read More"
                         button.id = movieData.id;
-                        button.className = "movieButton";
+                        button.className = "read-more-button";
                         div.appendChild(button);
 
-                        var rating = document.createElement("svg");
-                        rating.id = "rating-" + movieData.id;
-                        div.appendChild(rating);
+
+                        var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                        svg.setAttribute('id', "rating-" + movieData.id);
+                        svg.setAttribute('width', '100px');
+                        svg.setAttribute('height', '100px');
+                        svg.setAttribute('display', 'block');
+                        svg.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
+                        div.appendChild(svg);
 
                         button.addEventListener('click', function () {
-                            readMore(movieData, rating.id);
+                            readMore(movieData, svg);
                         });
-                        document.querySelector('#dynamicContent').appendChild(div);
 
+                        document.querySelector('#dynamicContent').appendChild(div);
                     }
                 };
 
@@ -130,24 +135,13 @@
             $("#dynamicContent").fadeIn(500);
         }
 
-        function readMore(obj, id) {
-            var gauge1 = loadLiquidFillGauge("fillgauge1", obj.vote_average);
+        function readMore(obj, svg) {
             var config1 = liquidFillGaugeDefaultSettings();
-            config1.circleColor = "#FF7777";
-            config1.textColor = "#FF4444";
-            config1.waveTextColor = "#FFAAAA";
-            config1.waveColor = "#FFDDDD";
+            config1.circleColor = "#7ac1c4";
+            config1.textColor = "#49adb1";
+            config1.waveTextColor = "#6dafb2";
+            config1.waveColor = "#b5d6d8";
             config1.circleThickness = 0.2;
-            config1.textVertPosition = 0.2;
             config1.waveAnimateTime = 1000;
-
-            var gauge2 = loadLiquidFillGauge(id, obj.vote_average);
-            var config2 = liquidFillGaugeDefaultSettings();
-            config2.circleColor = "#FF7777";
-            config2.textColor = "#FF4444";
-            config2.waveTextColor = "#FFAAAA";
-            config2.waveColor = "#FFDDDD";
-            config2.circleThickness = 0.2;
-            config2.textVertPosition = 0.2;
-            config2.waveAnimateTime = 1000;
+            var gauge2 = loadLiquidFillGauge(svg.id, obj.vote_average, config1);
         }
