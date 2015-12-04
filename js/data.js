@@ -119,13 +119,13 @@
                         svg.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
                         div.appendChild(svg);
 
-                        var outOf = document.createElement("p");
-                        outOf.innerHTML = "out of: " + movieData.vote_count + " total votes";
-                        outOf.style.visibility = "none";
-                        div.appendChild(outOf);
+                        var totalVotes = document.createElement("p");
+                        totalVotes.innerHTML = "Out of: " + movieData.vote_count + " total votes";
+                        totalVotes.style.visibility = "hidden";
+                        div.appendChild(totalVotes);
 
                         button.addEventListener('click', function () {
-                            outOf.style.visibility = "visible";
+                            totalVotes.style.visibility = "visible";
                             readMore(movieData, svg);
                         });
 
