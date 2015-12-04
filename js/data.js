@@ -1,33 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8" />
-    <title>Groovy Movies</title>
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <!-- import jQuery -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="../js/jquery.js"></script>
-    <script src="../js/video.js"></script>
-    <script>
         "use strict";
         var THEMOVIEDB_URL = "https://api.themoviedb.org/3/search/movie?api_key="
         var API_KEY = "883685de64b4c04801bcd597fc800e4a";
         var value;
+        var url;
 
         window.onload = init;
 
         function init() {
-            getData();
+            document.querySelector("#search").onclick = go;
+
+            $(document).keypress(function (e) {
+                if (e.which == 13) {
+                    go();
+                }
+            });
         };
+
+        function go() {
+            getData();
+            $("html, body").animate({
+                scrollTop: (($(window).height()) + 10) + 'px'
+            }, 600);
+            $('#searchterm').val('');
+            return false;
+        }
+
 
         // MY FUNCTIONS
         function getData() {
             // build up our URL string
-            var url = THEMOVIEDB_URL;
+            url = THEMOVIEDB_URL;
             url += API_KEY;
 
             // get value of form field
@@ -61,8 +63,6 @@
         }
 
         function jsonLoaded(obj) {
-            //console.log("obj = " + obj);
-            //console.log("obj stringified = " + JSON.stringify(obj));
 
             // if there's an error, print a message and return
             if (obj.error) {
@@ -74,7 +74,7 @@
             }
 
             // if there are no results, print a message and return
-            if (obj.total_items == 0) {
+            if (obj.results.length == 0) {
                 var status = "No results found";
                 document.querySelector("#dynamicContent").innerHTML = "<p><i>" + status + "</i><p>" + "<p><i>";
                 $("#dynamicContent").fadeIn(500);
@@ -98,10 +98,28 @@
                     if (this.readyState === 4) {
                         var movieData = JSON.parse(this.responseText);
 
-                        console.log(movieData.overview);
-                        bigString += movieData.original_title + "<br>";
-                        bigString += movieData.overview + "<br><br>";
-                        document.querySelector("#dynamicContent").innerHTML = bigString;
+                        var div = document.createElement('div');
+                        div.className = "movieDiv";
+                        bigString += "<h3>" + movieData.original_title + "</h3>";
+                        bigString += "<p>" + movieData.overview + "</p>";
+                        div.innerHTML = bigString;
+                        bigString = "";
+
+                        var button = document.createElement("button");
+                        button.innerHTML = "Read More"
+                        button.id = movieData.id;
+                        button.className = "movieButton";
+                        div.appendChild(button);
+
+                        var rating = document.createElement("svg");
+                        rating.id = "rating-" + movieData.id;
+                        div.appendChild(rating);
+
+                        button.addEventListener('click', function () {
+                            readMore(movieData, rating.id);
+                        });
+                        document.querySelector('#dynamicContent').appendChild(div);
+
                     }
                 };
 
@@ -111,23 +129,25 @@
 
             $("#dynamicContent").fadeIn(500);
         }
-    </script>
-    <style>
 
-    </style>
+        function readMore(obj, id) {
+            var gauge1 = loadLiquidFillGauge("fillgauge1", obj.vote_average);
+            var config1 = liquidFillGaugeDefaultSettings();
+            config1.circleColor = "#FF7777";
+            config1.textColor = "#FF4444";
+            config1.waveTextColor = "#FFAAAA";
+            config1.waveColor = "#FFDDDD";
+            config1.circleThickness = 0.2;
+            config1.textVertPosition = 0.2;
+            config1.waveAnimateTime = 1000;
 
-</head>
-
-<body>
-   
-    <h2>Results</h2>
-        <div id="dynamicContent">
-            <p>No data yet!</p>
-       </div>
-    <section id="results">
-    </section>
-
-
-</body>
-
-</html>
+            var gauge2 = loadLiquidFillGauge(id, obj.vote_average);
+            var config2 = liquidFillGaugeDefaultSettings();
+            config2.circleColor = "#FF7777";
+            config2.textColor = "#FF4444";
+            config2.waveTextColor = "#FFAAAA";
+            config2.waveColor = "#FFDDDD";
+            config2.circleThickness = 0.2;
+            config2.textVertPosition = 0.2;
+            config2.waveAnimateTime = 1000;
+        }

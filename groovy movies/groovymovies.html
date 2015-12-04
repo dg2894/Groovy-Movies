@@ -4,150 +4,14 @@
 <head>
     <meta charset="utf-8" />
     <title>Groovy Movies</title>
+
+    <!--css sheets -->
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../css/style.css">
+
+    <!--scripts-->
+
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <!-- import jQuery -->
-    <script src="../js/jquery.js"></script>
-    <script src="../js/video.js"></script>
-
-    <script>
-        "use strict";
-        var THEMOVIEDB_URL = "https://api.themoviedb.org/3/search/movie?api_key="
-        var API_KEY = "883685de64b4c04801bcd597fc800e4a";
-        var value;
-
-        window.onload = init;
-
-        function init() {
-            document.querySelector("#search").onclick = go;
-
-            $(document).keypress(function (e) {
-                if (e.which == 13) {
-                    go();
-                }
-            });
-        };
-
-        function go() {
-            getData();
-            $("html, body").animate({
-                scrollTop: (($(window).height()) + 10) + 'px'
-            }, 600);
-            return false;
-        }
-
-
-        // MY FUNCTIONS
-        function getData() {
-            // build up our URL string
-            var url = THEMOVIEDB_URL;
-            url += API_KEY;
-
-            // get value of form field
-            value = document.querySelector("#searchterm").value;
-
-            // get rid of any leading and trailing spaces
-            value = value.trim();
-
-            // if there's no band to search then bail out of the function
-            if (value.length < 1) return;
-
-            document.querySelector("#dynamicContent").innerHTML = "<b>Searching for " + value + "</b>";
-
-            // replace spaces the user typed in the middle of the term with %20
-            // %20 is the hexadecimal value for a space
-            value = encodeURI(value);
-
-            // finally, add the artist name to the end of the string
-            url += "&query=" + value;
-
-            // call the web service, and download the file
-            console.log("loading " + url);
-
-            $("#content").fadeOut(1000);
-            $.ajax({
-                dataType: "jsonp",
-                url: url,
-                data: null,
-                success: jsonLoaded
-            });
-        }
-
-        function jsonLoaded(obj) {
-            //console.log("obj = " + obj);
-            //console.log("obj stringified = " + JSON.stringify(obj));
-
-            // if there's an error, print a message and return
-            if (obj.error) {
-                var status = obj.status;
-                var description = obj.description;
-                document.querySelector("#dynamicContent").innerHTML = "<h3><b>Error!</b></h3>" + "<p><i>" + status + "</i><p>" + "<p><i>" + description + "</i><p>";
-                $("#dynamicContent").fadeIn(500);
-                return; // Bail out
-            }
-
-            // if there are no results, print a message and return
-            if (obj.total_items == 0) {
-                var status = "No results found";
-                document.querySelector("#dynamicContent").innerHTML = "<p><i>" + status + "</i><p>" + "<p><i>";
-                $("#dynamicContent").fadeIn(500);
-                return; // Bail out
-            }
-
-            var allMovies = obj.results;
-            var bigString = "<p><b>There are " + allMovies.length + " events for " + value + "</b></p>";
-            bigString += "<hr />";
-
-            for (var i = 0; i < allMovies.length; i++) {
-                var initial = allMovies[i];
-
-                var url = "https://api.themoviedb.org/3/movie/" + initial.id + "?api_key=" + API_KEY + "&append_to_response=credits";
-
-                var request = new XMLHttpRequest();
-
-                request.open('GET', url);
-
-                request.onreadystatechange = function () {
-                    if (this.readyState === 4) {
-                        var movieData = JSON.parse(this.responseText);
-
-                        var div = document.createElement('div');
-                        div.className = "movieDiv";
-                        bigString += "<h3>" + movieData.original_title + "</h3>";
-                        bigString += "<p>" + movieData.overview + "</p>";
-                        div.innerHTML = bigString;
-                        bigString = "";
-
-
-                        var button = document.createElement("button");
-                        button.innerHTML = "Read More"
-                        button.id = movieData.original_title;
-                        button.className = "movieButton";
-                        button.addEventListener('click', function () {
-                            readMore(movieData);
-                        });
-
-                        div.appendChild(button);
-                        document.querySelector('#dynamicContent').appendChild(div);
-                    }
-                };
-
-                request.send();
-
-            }
-
-            $("#dynamicContent").fadeIn(500);
-        }
-
-        function readMore(obj) {
-            console.log("clicked");
-            console.log(obj.original_title);
-        }
-    </script>
-    <style>
-
-    </style>
 
 </head>
 
@@ -175,8 +39,6 @@
             <input id="searchterm" type="text" size="20" maxlength="20">
             <button type="button" id="search" href="#results">go</button>
         </div>
-
-        <!--        <a href="#results" title="photography"><img class="down" src="../media/button.png" alt="" width="50" height="50"></a>-->
     </div>
     <div class="contain">
         <section id="results">
@@ -184,8 +46,15 @@
             <div id="dynamicContent">
                 <p>No data yet!</p>
             </div>
+            <svg id="fillgauge1"></svg>
         </section>
     </div>
+
+    <script src="../js/jquery.js"></script>
+    <script src="../js/video.js"></script>
+    <script src="../js/d3.min.js" language="JavaScript"></script>
+    <script src="../js/gauge.js" language="JavaScript"></script>
+    <script src="../js/data.js"></script>
 
 </body>
 
