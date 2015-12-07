@@ -132,7 +132,7 @@
                         left.appendChild(title);
 
                         if (movieData.poster_path == null) {
-                            var src = "../media/action.png";
+                            var src = "../media/noimage.jpg";
                         } else {
                             var src = base_url + size + "/" + movieData.poster_path;
                         }
