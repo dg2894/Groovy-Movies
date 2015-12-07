@@ -10,10 +10,10 @@
             document.querySelector("#search").onclick = go;
 
             $(document).keypress(function (e) {
-                
+
                 if (e.which == 13) {
                     go();
-                    
+
                 }
             });
         };
@@ -84,8 +84,7 @@
             }
 
             var allMovies = obj.results;
-            var bigString = "<p><b>There are " + allMovies.length + " events for " + value + "</b></p>";
-            bigString += "<hr />";
+            var bigString = "<p><b>There are " + allMovies.length + " movies for " + value + "</b></p>";
 
             for (var i = 0; i < allMovies.length; i++) {
                 var initial = allMovies[i];
@@ -119,20 +118,64 @@
                         var movieData = JSON.parse(this.responseText);
                         //console.log(JSON.stringify(movieData));
 
-                        var div = document.createElement('div');
-                        div.className = "movieDiv";
-                        bigString += "<h3>" + movieData.original_title + "</h3>";
-                        bigString += "<p>" + movieData.overview + "</p>";
-                        var src = base_url + size + "/" + movieData.poster_path;
-                        bigString += "<img src='" + src + "'/><br><br>";
-                        div.innerHTML = bigString;
-                        bigString = "";
+                        /*movie div*/
+
+                        var movieDiv = document.createElement('div');
+                        movieDiv.className = "movieDiv";
+
+                        /*left div*/
+
+                        var left = document.createElement('div');
+                        left.id = "left";
+                        var title = document.createElement('h3');
+                        title.innerHTML = movieData.original_title;
+                        left.appendChild(title);
+
+                        if (movieData.poster_path == null) {
+                            var src = "../media/action.png";
+                        } else {
+                            var src = base_url + size + "/" + movieData.poster_path;
+                        }
+
+                        left.innerHTML += "<img class='poster' src='" + src + "'/>";
+
+                        movieDiv.appendChild(left);
+
+                        /*right div*/
+
+                        var right = document.createElement('div');
+                        right.id = "right";
+                        var overview = document.createElement('p');
+                        overview.className = "description";
+
+                        if (movieData.overview == null) {
+                            overview.innerHTML = "No description found."
+                        } else {
+                            overview.innerHTML = movieData.overview;
+                        }
+
+                        right.appendChild(overview);
+
+                        var castDiv = document.createElement("div");
+                        castDiv.className = "cast";
+                        var castString = document.createElement("p");
+                        castString.innerHTML = "Starring: ";
+                        for (var i = 0; i < movieData.credits.cast.length; i++) {
+                            castString.innerHTML += movieData.credits.cast[i].name + ", ";
+                        }
+                        castDiv.appendChild(castString);
+                        right.appendChild(castDiv);
 
                         var button = document.createElement("button");
                         button.innerHTML = "Read More"
                         button.id = movieData.id;
                         button.className = "read-more-button";
-                        div.appendChild(button);
+                        button.addEventListener('click', function () {
+                            totalVotes.style.visibility = "visible";
+                            readMore(movieData, svg);
+                        });
+
+                        right.appendChild(button);
 
                         var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
                         svg.setAttribute('id', "rating-" + movieData.id);
@@ -140,19 +183,19 @@
                         svg.setAttribute('height', '100px');
                         svg.setAttribute('display', 'block');
                         svg.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
-                        div.appendChild(svg);
+                        right.appendChild(svg);
 
                         var totalVotes = document.createElement("p");
                         totalVotes.innerHTML = "Out of: " + movieData.vote_count + " total votes";
                         totalVotes.style.visibility = "hidden";
-                        div.appendChild(totalVotes);
+                        right.appendChild(totalVotes);
 
-                        button.addEventListener('click', function () {
-                            totalVotes.style.visibility = "visible";
-                            readMore(movieData, svg);
-                        });
+                        movieDiv.appendChild(right);
+                        var clear = document.createElement("div");
+                        clear.style.clear = "both";
+                        movieDiv.appendChild(clear);
 
-                        document.querySelector('#dynamicContent').appendChild(div);
+                        document.querySelector('#dynamicContent').appendChild(movieDiv);
                     }
                 };
 

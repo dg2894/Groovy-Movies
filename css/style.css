@@ -1,6 +1,7 @@
-    h2{
+    h2 {
         font-size: 12px;
     }
+    
     .homepage-hero-module {
         border-right: none;
         border-left: none;
@@ -135,17 +136,30 @@
         -webkit-transition: all 2s ease;
         transition: all 2s ease;
     }
-    .contain{
+    
+    .contain {
         width: 1200px;
         margin: auto;
-        
     }
-.movieDiv img{
-    width: 200px;
-    height: 300px; 
-}
-.movieDiv p{
-   float: right;
-    width: 800px;
     
-}
+    #right {
+        float: right;
+        width: 50%;
+        padding-top: 50px;
+    }
+    
+    #left {
+        float: left;
+        width: 50%;
+    }
+    
+    .movieDiv {
+        height: 600px;
+        overflow: auto;
+        margin-bottom: 50px;
+        width: 100%;
+    }
+    
+    .poster {
+        max-width: 300px;
+    }
