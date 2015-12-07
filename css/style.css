@@ -1,3 +1,6 @@
+    h2{
+        font-size: 12px;
+    }
     .homepage-hero-module {
         border-right: none;
         border-left: none;
@@ -114,11 +117,9 @@
     }
     
     .read-more-button {
-        background-color: #d1d1d1;
-        border: 1px solid #0d0d0d;
         display: inline-block;
         cursor: pointer;
-        color: #ffffff;
+        color: #fff;
         font-family: 'Open Sans', sans-serif;
         font-size: 13px;
         font-weight: bold;
@@ -126,6 +127,7 @@
         text-decoration: none;
         height: 38px;
         width: 100px;
+        background-color: #74ad5a;
     }
     
     svg {
@@ -133,3 +135,17 @@
         -webkit-transition: all 2s ease;
         transition: all 2s ease;
     }
+    .contain{
+        width: 1200px;
+        margin: auto;
+        
+    }
+.movieDiv img{
+    width: 200px;
+    height: 300px; 
+}
+.movieDiv p{
+   float: right;
+    width: 800px;
+    
+}

@@ -10,8 +10,10 @@
             document.querySelector("#search").onclick = go;
 
             $(document).keypress(function (e) {
+                
                 if (e.which == 13) {
                     go();
+                    
                 }
             });
         };
@@ -90,6 +92,24 @@
 
                 var url = "https://api.themoviedb.org/3/movie/" + initial.id + "?api_key=" + API_KEY + "&append_to_response=credits";
 
+                var config = "http://api.themoviedb.org/3/configuration?api_key=" + API_KEY;
+                var requestConfig = new XMLHttpRequest();
+                var base_url;
+                var size;
+
+                requestConfig.open('GET', config);
+
+                requestConfig.onreadystatechange = function () {
+                    if (this.readyState === 4) {
+                        var configData = JSON.parse(this.responseText);
+                        //console.log(JSON.stringify(configData));
+                        base_url = configData.images.base_url;
+                        size = configData.images.poster_sizes[3];
+                    }
+                };
+
+                requestConfig.send();
+
                 var request = new XMLHttpRequest();
 
                 request.open('GET', url);
@@ -97,11 +117,14 @@
                 request.onreadystatechange = function () {
                     if (this.readyState === 4) {
                         var movieData = JSON.parse(this.responseText);
+                        //console.log(JSON.stringify(movieData));
 
                         var div = document.createElement('div');
                         div.className = "movieDiv";
                         bigString += "<h3>" + movieData.original_title + "</h3>";
                         bigString += "<p>" + movieData.overview + "</p>";
+                        var src = base_url + size + "/" + movieData.poster_path;
+                        bigString += "<img src='" + src + "'/><br><br>";
                         div.innerHTML = bigString;
                         bigString = "";
 
